@@ -22,6 +22,111 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# Custom CSS for professional styling
+st.markdown("""
+<style>
+    /* Main title styling */
+    h1 {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+
+    /* Card styling for chat messages */
+    .stChatMessage {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        border-left: 3px solid #667eea;
+        padding: 1rem;
+        margin: 0.5rem 0;
+    }
+
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    }
+
+    /* Metric styling */
+    [data-testid="stMetricValue"] {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #667eea;
+    }
+
+    /* Button styling */
+    .stButton button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 0.5rem 1rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .stButton button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Input field styling */
+    .stTextInput input {
+        border-radius: 8px;
+        border: 2px solid rgba(102, 126, 234, 0.3);
+        transition: border-color 0.3s ease;
+    }
+
+    .stTextInput input:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+    }
+
+    /* Expander styling */
+    .streamlit-expanderHeader {
+        background: rgba(102, 126, 234, 0.1);
+        border-radius: 8px;
+        font-weight: 500;
+    }
+
+    /* Code block styling */
+    code {
+        background: rgba(102, 126, 234, 0.1);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        font-family: 'Monaco', 'Menlo', monospace;
+    }
+
+    /* Divider styling */
+    hr {
+        border: none;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #667eea, transparent);
+        margin: 2rem 0;
+    }
+
+    /* Caption styling */
+    .caption {
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.875rem;
+    }
+
+    /* Status message styling */
+    .stAlert {
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+    }
+
+    /* Subheader gradient */
+    h2, h3 {
+        color: #667eea;
+        font-weight: 600;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Initialize session state
 if "api_key" not in st.session_state:
     st.session_state.api_key = ""
@@ -141,8 +246,23 @@ with st.sidebar:
 
 
 # Main content
-st.title(APP_NAME)
-st.caption(APP_DESCRIPTION)
+col1, col2 = st.columns([3, 1])
+with col1:
+    st.title(APP_NAME)
+    st.caption(APP_DESCRIPTION)
+with col2:
+    st.markdown("""
+    <div style='text-align: right; padding-top: 1rem;'>
+        <span style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                     color: white;
+                     padding: 0.5rem 1rem;
+                     border-radius: 20px;
+                     font-size: 0.875rem;
+                     font-weight: 600;'>
+            AI-Powered Analysis
+        </span>
+    </div>
+    """, unsafe_allow_html=True)
 
 # Check for API key
 if not st.session_state.api_key:
@@ -186,23 +306,31 @@ if st.session_state.session_data:
 if not st.session_state.session_data or not st.session_state.session_data.get("messages"):
     with st.chat_message("assistant"):
         st.markdown("""
-**Welcome to Evidence Engine**
+### Welcome to Evidence Engine
 
 I transform unstructured research into defensible, evidence-based insights.
 
-**How this works:**
+---
 
-1. Input your research data (interviews, feedback, analytics, documentation)
-2. Request specific analysis (hypothesis testing, pattern identification, stakeholder reports)
-3. Receive transparent results with complete reasoning traces
+#### How this works:
 
-**Available Commands:**
+1. **Input** your research data (interviews, feedback, analytics, documentation)
+2. **Request** specific analysis (hypothesis testing, pattern identification, stakeholder reports)
+3. **Receive** transparent results with complete reasoning traces
 
-• **Evidence Extraction**: Paste raw research to extract structured evidence chunks
-• **Hypothesis Testing**: "Test my hypothesis that [statement]" - Evaluates supporting and contradicting evidence
-• **Pattern Analysis**: "What patterns do you see?" - Identifies themes and contradictions
-• **Stakeholder Reporting**: "Prepare a stakeholder summary" - Generates executive-ready summaries
-• **Assumption Validation**: "Challenge my assumption that [statement]" - Identifies counter-evidence
+---
+
+#### Available Commands:
+
+| Command | Description |
+|---------|-------------|
+| **Evidence Extraction** | Paste raw research to extract structured evidence chunks |
+| **Hypothesis Testing** | "Test my hypothesis that [statement]" |
+| **Pattern Analysis** | "What patterns do you see?" |
+| **Stakeholder Reporting** | "Prepare a stakeholder summary" |
+| **Assumption Validation** | "Challenge my assumption that [statement]" |
+
+---
 
 Begin by pasting your research data below.
         """)
