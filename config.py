@@ -12,10 +12,10 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 
 # Model to use (Gemini 1.5 Flash is FREE with generous limits!)
 # Options:
-# - "gemini-1.5-flash" (FREE - 15 requests/min, 1M tokens/min, RECOMMENDED)
-# - "gemini-1.5-pro" (FREE - 2 requests/min, highest quality)
+# - "gemini-1.5-flash-latest" (FREE - 15 requests/min, 1M tokens/min, RECOMMENDED)
+# - "gemini-1.5-pro-latest" (FREE - 2 requests/min, highest quality)
 # - "gemini-2.0-flash-exp" (Experimental - very limited quotas, not recommended)
-MODEL_NAME = "gemini-1.5-flash"
+MODEL_NAME = "gemini-1.5-flash-latest"
 
 
 def get_api_key():
