@@ -1,19 +1,18 @@
 # Evidence Engine MVP - Dependencies
 
 # UI
-streamlit==1.40.0
+streamlit>=1.30.0
 
 # LLM (Google Gemini - FREE!)
-# Note: For Python 3.8, use 0.1.0rc2. For Python 3.9+, use latest version
-google-generativeai>=0.1.0rc2
+google-generativeai>=0.8.0
 
 # Database
-sqlalchemy==2.0.30
+sqlalchemy>=2.0.0
 
 # Export
-markdown==3.6
-fpdf2==2.7.9
+markdown>=3.5
+fpdf2>=2.7.0
 
 # Utilities
-python-dotenv==1.0.1
-pydantic==2.7.0
+python-dotenv>=1.0.0
+pydantic>=2.0.0
