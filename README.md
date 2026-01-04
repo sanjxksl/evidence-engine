@@ -1,36 +1,32 @@
-# 🔍 Evidence Engine
+# Evidence Engine
 
-**Turn messy PM research into defensible decisions.**
+Transform unstructured product research into defensible, evidence-based decisions.
 
-Evidence Engine is a conversational tool that helps Product Managers:
-- Extract structured evidence from raw research (interviews, feedback, analytics)
-- Test hypotheses against actual evidence (not gut feeling)
-- Find patterns, contradictions, and gaps
-- Generate stakeholder-ready summaries with full reasoning transparency
+Evidence Engine is a conversational AI tool designed to help Product Managers:
+- Extract structured evidence from raw research inputs (user interviews, feedback, analytics)
+- Test hypotheses against empirical evidence rather than intuition
+- Identify patterns, contradictions, and gaps in research data
+- Generate stakeholder-ready summaries with complete reasoning transparency
 
-Built to combat cognitive bias in product prioritization.
+The tool addresses cognitive bias in product prioritization through systematic evidence synthesis.
 
----
+## Problem Statement
 
-## 🎯 The Problem It Solves
+Research indicates significant challenges in product decision-making:
+- Only 6.4% of features drive 80% of product usage (Pendo 2024)
+- 92% of high-confidence A/B tests fail to achieve predicted outcomes (Kohavi)
+- Product management frameworks such as RICE often become rationalization tools rather than decision aids
 
-Research shows:
-- **6.4%** of features drive 80% of product usage (Pendo 2024)
-- **92%** of "high confidence" A/B tests fail (Kohavi)
-- PM frameworks like RICE become **rationalization tools**, not decision aids
+The underlying issue is that cognitive bias enters during evidence synthesis, prior to the prioritization phase.
 
-The root cause: bias enters during evidence synthesis, before prioritization even begins.
+Evidence Engine addresses this by structuring the synthesis process with full transparency. Users can see exactly how conclusions are derived, making decisions defensible and bias observable.
 
-Evidence Engine structures that messy synthesis step with full transparency—you see exactly how conclusions are reached, making decisions defensible and bias visible.
+## Installation and Setup
 
----
-
-## 🚀 Quick Start
-
-### 1. Clone and Install
+### 1. Clone and Install Dependencies
 
 ```bash
-git clone <your-repo>
+git clone https://github.com/sanjxksl/evidence-engine.git
 cd evidence-engine
 
 # Create virtual environment (recommended)
@@ -41,80 +37,79 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Set Up API Key (100% FREE!)
+### 2. Configure API Key
+
+This application uses Google Gemini API, which is available at no cost with no credit card required.
 
 ```bash
-# Copy the example env file
+# Copy the example environment file
 cp .env.example .env
 
-# Edit .env and add your FREE Google Gemini API key
-# Get one at: https://aistudio.google.com/app/apikey
-# NO CREDIT CARD REQUIRED!
+# Edit .env and add your Google Gemini API key
+# Obtain a key at: https://aistudio.google.com/app/apikey
 ```
 
-### 3. Run
+### 3. Run the Application
 
 ```bash
 streamlit run app.py
 ```
 
-Open http://localhost:8501 in your browser.
+The application will be available at http://localhost:8501.
 
----
+## Usage Guide
 
-## 📖 How to Use
+### Step 1: Input Research Data
 
-### Step 1: Paste Your Research
-
-Copy-paste your raw research into the chat:
-- Interview notes from Google Docs
-- User feedback from Zendesk/Intercom
+Input raw research data into the application interface:
+- User interview notes
+- Customer feedback from support channels
 - Survey responses
-- Stakeholder requests
+- Stakeholder requests and requirements
 
-The engine will extract structured evidence chunks, showing you exactly what it found and why.
+The system extracts structured evidence chunks and displays the extraction reasoning.
 
-### Step 2: Tell It What You Need
+### Step 2: Perform Analysis
 
-**Test a hypothesis:**
+The application supports multiple analysis modes:
+
+**Hypothesis Testing:**
 ```
 Test my hypothesis that users are churning because onboarding is confusing
 ```
 
-**Find patterns:**
+**Pattern Identification:**
 ```
 What patterns do you see in this evidence?
 ```
 
-**Assess confidence:**
+**Confidence Assessment:**
 ```
 How strong is our evidence that users want dark mode?
 ```
 
-**Prepare for stakeholders:**
+**Stakeholder Reporting:**
 ```
 Generate a summary I can present to my VP
 ```
 
-**Challenge your assumptions:**
+**Assumption Validation:**
 ```
 Find evidence against my belief that pricing is the main churn driver
 ```
 
-### Step 3: Iterate
+### Step 3: Iterate and Refine
 
-The engine is conversational. You can:
-- Challenge its conclusions ("What about the enterprise users?")
-- Ask follow-up questions ("What would change this verdict?")
-- Add more evidence ("Here's another interview...")
-- Request different outputs ("Now give me the stakeholder version")
+The application supports conversational interaction:
+- Challenge conclusions with follow-up questions
+- Request clarification on specific verdicts
+- Add supplementary evidence to existing sessions
+- Generate alternative output formats
 
----
+## Key Features
 
-## 🔍 Key Features
-
-### Full Transparency
-Every conclusion shows its reasoning trace. No black boxes.
+### Transparent Reasoning
+All conclusions include complete reasoning traces with no hidden logic.
 
 ```
 ┌─ REASONING TRACE ───────────────────────────────────────┐
@@ -126,98 +121,99 @@ Every conclusion shows its reasoning trace. No black boxes.
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Evidence Typing
-Each chunk is categorized:
-- `user_quote` - Direct user statements
-- `behavioral_observation` - What users did (not said)
-- `support_ticket` - Feedback from support channels
-- `analytics_data` - Quantitative metrics
-- `stakeholder_input` - Internal requests
-- `competitor_intel` - Competitive information
+### Evidence Classification
+Evidence is automatically categorized by type:
+- `user_quote`: Direct user statements
+- `behavioral_observation`: Observed user actions
+- `support_ticket`: Customer support feedback
+- `analytics_data`: Quantitative metrics
+- `stakeholder_input`: Internal requirements
+- `competitor_intel`: Competitive intelligence
 
-### Bias Mitigation
-- **Hypothesis testing** actively searches for counter-evidence
-- **Confidence assessment** rates evidence quality, not just quantity
-- **Devil's advocate mode** challenges your assumptions
-- **Gap identification** shows what you don't know
+### Bias Mitigation Features
+- Hypothesis testing actively searches for counter-evidence
+- Confidence assessment evaluates evidence quality rather than quantity alone
+- Assumption challenge mode identifies contradictory evidence
+- Gap identification highlights missing information
 
-### Stakeholder-Ready Output
-Generate summaries with:
-- Clear headline and evidence base
-- Key findings with implications
-- Confidence level with reasoning
-- Caveats and gaps acknowledged
+### Stakeholder Reports
+Generated summaries include:
+- Executive summary and evidence base
+- Key findings with business implications
+- Confidence assessment with supporting reasoning
+- Acknowledged caveats and research gaps
 - Recommended next steps
 
----
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 evidence-engine/
-├── app.py                    # Main Streamlit app
+├── app.py                    # Main Streamlit application
 ├── config.py                 # Configuration and constants
 ├── requirements.txt          # Python dependencies
-├── .env.example              # Environment template
+├── .env.example              # Environment variable template
 │
 ├── core/                     # Core processing logic
 │   ├── reasoning.py          # Transparent LLM wrapper
 │   ├── extractor.py          # Evidence extraction
-│   ├── synthesizer.py        # Pattern finding, hypothesis testing
-│   └── output_generator.py   # Stakeholder outputs
+│   ├── synthesizer.py        # Pattern finding and hypothesis testing
+│   ├── intent_classifier.py  # LLM-based intent classification
+│   └── output_generator.py   # Stakeholder output generation
 │
-├── prompts/                  # All LLM prompts (the secret sauce)
+├── prompts/                  # LLM prompt templates
 │   ├── extraction.py         # Evidence extraction prompts
 │   ├── hypothesis.py         # Hypothesis testing prompts
 │   ├── synthesis.py          # Pattern finding prompts
 │   └── stakeholder.py        # Output generation prompts
 │
-└── db/                       # Database (SQLite)
-    └── models.py             # Data models
+└── db/                       # Database layer
+    ├── models.py             # SQLAlchemy data models
+    └── service.py            # Database service layer
 ```
 
----
+## Configuration and Customization
 
-## 🔧 Customization
+### Model Selection
 
-### Change the LLM Model
-
-In `config.py`:
+Modify the model in `config.py`:
 ```python
-MODEL_NAME = "gemini-2.0-flash-exp"  # Default: FREE, fast and smart (recommended!)
-# MODEL_NAME = "gemini-1.5-flash"    # FREE - 15 requests/min, very fast
-# MODEL_NAME = "gemini-1.5-pro"      # FREE - 2 requests/min, highest quality
+MODEL_NAME = "gemini-2.0-flash-exp"  # Default (recommended)
+# MODEL_NAME = "gemini-1.5-flash"    # 15 requests/min, optimized for speed
+# MODEL_NAME = "gemini-1.5-pro"      # 2 requests/min, highest quality
 ```
 
-**All models are 100% FREE** with generous rate limits!
+All Google Gemini models are available at no cost with generous rate limits.
 
-### Modify Prompts
+### Prompt Customization
 
-All prompts are in `prompts/`. The key ones:
-- `extraction.py` - How evidence is parsed from raw text
-- `hypothesis.py` - How hypotheses are evaluated
-- `synthesis.py` - How patterns are found
-- `stakeholder.py` - How outputs are formatted
+All prompts are located in the `prompts/` directory:
+- `extraction.py`: Evidence parsing from raw text
+- `hypothesis.py`: Hypothesis evaluation logic
+- `synthesis.py`: Pattern identification algorithms
+- `stakeholder.py`: Output formatting templates
 
-### Add New Output Types
+### Extending Functionality
 
-1. Add a new prompt template in `prompts/`
-2. Add a handler method in `core/output_generator.py`
-3. Add the intent detection in `app.py`
+To add new output types:
+1. Create a new prompt template in `prompts/`
+2. Implement a handler method in `core/output_generator.py`
+3. Update intent detection in `app.py`
 
----
+## Deployment
 
-## 🚢 Deployment
+### Streamlit Cloud
 
-### Streamlit Cloud (Free)
+Streamlit Cloud provides free hosting for Streamlit applications.
 
-1. Push to GitHub
-2. Go to [share.streamlit.io](https://share.streamlit.io)
-3. Connect your repo
-4. Add `GOOGLE_API_KEY` to secrets (get FREE key at https://aistudio.google.com/app/apikey)
-5. Deploy
+1. Push repository to GitHub
+2. Navigate to [share.streamlit.io](https://share.streamlit.io)
+3. Connect your GitHub repository
+4. Configure secrets: Add `GOOGLE_API_KEY` with your API key from https://aistudio.google.com/app/apikey
+5. Deploy the application
 
-### Local Docker
+### Docker Deployment
+
+For containerized deployment:
 
 ```dockerfile
 FROM python:3.11-slim
@@ -228,50 +224,40 @@ COPY . .
 CMD ["streamlit", "run", "app.py", "--server.port=8501"]
 ```
 
----
+## Validation Metrics
 
-## 📊 Validation Metrics
-
-When testing with PM friends, track:
+Recommended metrics for evaluating the tool with product teams:
 
 | Metric | Target |
 |--------|--------|
-| Time to useful output | < 15 min |
-| "Would use again" | > 70% |
-| Used output in real stakeholder convo | At least 2/5 testers |
-| Reasoning trace was helpful | > 80% |
+| Time to useful output | < 15 minutes |
+| User retention ("Would use again") | > 70% |
+| Real stakeholder usage | At least 2/5 testers |
+| Reasoning trace utility | > 80% |
 
----
+## Future Development
 
-## 🤝 Contributing
+Current areas identified for enhancement:
 
-This is an MVP. Key areas for improvement:
+1. Advanced intent detection using additional context
+2. Enhanced evidence persistence with session management
+3. Direct integrations with tools such as Notion, Intercom, and Jira
+4. Outcome tracking to compare predictions against actual results
+5. Historical calibration to improve accuracy over time
 
-1. **Better intent detection** - Current keyword matching is brittle
-2. **Evidence persistence** - Save sessions across browser refreshes
-3. **Integrations** - Pull from Notion, Intercom, Jira directly
-4. **Outcome tracking** - Compare predictions to actual outcomes
-5. **Historical calibration** - Learn from past accuracy
+## Research Foundation
 
----
+This tool is based on research in cognitive bias and product decision-making:
 
-## 📚 Research Background
-
-This tool is based on research into cognitive bias in PM prioritization:
-
-- Kahneman & Tversky (1974) - Heuristics and biases
-- Morewedge et al. (2015) - Debiasing interventions
-- Pendo (2024) - Feature adoption benchmarks
-- Kohavi (2020) - A/B testing success rates
-
-See the full research report for methodology and findings.
-
----
+- Kahneman & Tversky (1974): Heuristics and biases
+- Morewedge et al. (2015): Debiasing interventions
+- Pendo (2024): Feature adoption benchmarks
+- Kohavi (2020): A/B testing success rates
 
 ## License
 
 MIT
 
----
+## About
 
-**Built with frustration, research, and hope that PMs can make better decisions.**
+Evidence Engine was developed to address systematic bias in product prioritization decisions through transparent, evidence-based synthesis.
