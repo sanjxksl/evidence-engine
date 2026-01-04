@@ -17,7 +17,7 @@ from db.service import DatabaseService
 # Page config
 st.set_page_config(
     page_title=APP_NAME,
-    page_icon="🔍",
+    page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -63,9 +63,9 @@ def add_message(role: str, content: str, reasoning: str = None, action_type: str
 def display_reasoning_trace(reasoning: List[str], title: str = "Reasoning"):
     """Display reasoning in an expandable box."""
     if reasoning:
-        with st.expander(f"🧠 {title} (click to expand)"):
+        with st.expander(f"▸ {title}"):
             for step in reasoning:
-                st.markdown(f"- {step}")
+                st.markdown(f"• {step}")
 
 
 def display_evidence_chunk(chunk: Dict, index: int):
@@ -81,26 +81,26 @@ def display_evidence_chunk(chunk: Dict, index: int):
 
 # Sidebar
 with st.sidebar:
-    st.title("⚙️ Settings")
-    
+    st.title("Settings")
+
     # API Key input
     api_key = st.text_input(
-        "Google Gemini API Key (FREE!)",
+        "Google Gemini API Key",
         type="password",
         value=st.session_state.api_key,
-        help="Get a FREE API key at aistudio.google.com/app/apikey - no credit card required!"
+        help="Get a free API key at aistudio.google.com/app/apikey"
     )
     if api_key:
         st.session_state.api_key = api_key
-    
+
     st.divider()
-    
+
     # Evidence summary
-    st.subheader("📊 Evidence Summary")
+    st.subheader("Evidence Summary")
     if st.session_state.session_data:
         evidence_chunks = st.session_state.session_data.get("evidence_chunks", [])
         if evidence_chunks:
-            st.metric("Total Chunks", len(evidence_chunks))
+            st.metric("Total Evidence Chunks", len(evidence_chunks))
 
             # Count by type
             types = {}
@@ -111,16 +111,16 @@ with st.sidebar:
             for t, count in types.items():
                 st.caption(f"• {t}: {count}")
         else:
-            st.caption("No evidence yet. Paste your research to get started.")
+            st.caption("No evidence loaded. Paste your research to begin.")
     else:
-        st.caption("No evidence yet. Paste your research to get started.")
-    
+        st.caption("No evidence loaded. Paste your research to begin.")
+
     st.divider()
-    
+
     # Quick actions
-    st.subheader("🚀 Quick Actions")
-    
-    if st.button("🗑️ Clear All", use_container_width=True):
+    st.subheader("Actions")
+
+    if st.button("Clear Session", use_container_width=True):
         # Archive current session
         st.session_state.db_service.archive_session(st.session_state.current_session_id)
 
@@ -131,9 +131,9 @@ with st.sidebar:
         st.rerun()
 
     if st.session_state.session_data and st.session_state.session_data.get("evidence_chunks"):
-        if st.button("📥 Export Evidence (JSON)", use_container_width=True):
+        if st.button("Export Evidence", use_container_width=True):
             st.download_button(
-                label="Download",
+                label="Download JSON",
                 data=json.dumps(st.session_state.session_data["evidence_chunks"], indent=2),
                 file_name="evidence_export.json",
                 mime="application/json",
@@ -141,27 +141,26 @@ with st.sidebar:
 
 
 # Main content
-st.title(f"🔍 {APP_NAME}")
+st.title(APP_NAME)
 st.caption(APP_DESCRIPTION)
 
 # Check for API key
 if not st.session_state.api_key:
-    st.warning("👈 Please enter your FREE Google Gemini API key in the sidebar to get started.")
+    st.warning("⚠ Please enter your Google Gemini API key in the sidebar to continue.")
     st.info("""
-    **What is this tool?**
-    
-    Evidence Engine helps Product Managers:
-    - Extract structured evidence from messy research notes
-    - Test hypotheses against actual evidence
-    - Find patterns and contradictions
-    - Generate stakeholder-ready summaries
-    - See exactly HOW conclusions are reached (full transparency)
-    
-    **Get started:**
-    1. Get a FREE API key at https://aistudio.google.com/app/apikey (no credit card!)
-    2. Enter your Google Gemini API key in the sidebar
-    2. Paste your research notes (from Google Docs, interviews, etc.)
-    3. Tell the tool what you want to learn
+    **About Evidence Engine**
+
+    Evidence Engine is a conversational AI tool for Product Managers that:
+    - Extracts structured evidence from unstructured research
+    - Tests hypotheses against empirical evidence
+    - Identifies patterns and contradictions
+    - Generates stakeholder-ready summaries
+    - Provides complete reasoning transparency
+
+    **Setup Instructions**
+    1. Obtain a free API key at https://aistudio.google.com/app/apikey
+    2. Enter your API key in the sidebar
+    3. Paste your research data to begin analysis
     """)
     st.stop()
 
@@ -187,22 +186,25 @@ if st.session_state.session_data:
 if not st.session_state.session_data or not st.session_state.session_data.get("messages"):
     with st.chat_message("assistant"):
         st.markdown("""
-**Hi! I'm your Evidence Engine.** 👋
+**Welcome to Evidence Engine**
 
-I help you turn messy research into defensible decisions. Here's how:
+I transform unstructured research into defensible, evidence-based insights.
 
-1. **Paste your research** - Interview notes, feedback, analytics... anything
-2. **Tell me what you want** - Test a hypothesis, find patterns, prepare for a stakeholder
-3. **I'll analyze with full transparency** - You'll see exactly how I reach every conclusion
+**How this works:**
 
-**What would you like to do?**
+1. Input your research data (interviews, feedback, analytics, documentation)
+2. Request specific analysis (hypothesis testing, pattern identification, stakeholder reports)
+3. Receive transparent results with complete reasoning traces
 
-- 📝 **"Here are my interview notes..."** - Paste research to extract evidence
-- 🔬 **"Test my hypothesis that..."** - I'll find supporting AND contradicting evidence  
-- 🔍 **"What patterns do you see?"** - I'll cluster and synthesize
-- 📊 **"Prepare a summary for my VP"** - I'll generate stakeholder-ready output
+**Available Commands:**
 
-Just type or paste below to get started.
+• **Evidence Extraction**: Paste raw research to extract structured evidence chunks
+• **Hypothesis Testing**: "Test my hypothesis that [statement]" - Evaluates supporting and contradicting evidence
+• **Pattern Analysis**: "What patterns do you see?" - Identifies themes and contradictions
+• **Stakeholder Reporting**: "Prepare a stakeholder summary" - Generates executive-ready summaries
+• **Assumption Validation**: "Challenge my assumption that [statement]" - Identifies counter-evidence
+
+Begin by pasting your research data below.
         """)
 
 # Chat input
@@ -250,7 +252,7 @@ if user_input:
 
                 if intent == "extraction":
                     # Extract evidence from raw input
-                    st.markdown("📝 **Extracting evidence from your research...**")
+                    st.markdown("**Extracting evidence from research data...**")
 
                     result = extractor.extract(user_input)
 
@@ -272,7 +274,7 @@ if user_input:
 """
                     
                     if result.get("concerns"):
-                        response += "\n\n**⚠️ Concerns:**\n"
+                        response += "\n\n**Concerns:**\n"
                         for concern in result["concerns"]:
                             response += f"- {concern}\n"
                     
@@ -302,20 +304,12 @@ if user_input:
                         # Use extracted hypothesis from parameters if available
                         hypothesis = parameters.get("hypothesis", user_input)
 
-                        st.markdown(f"🔬 **Testing hypothesis:** *{hypothesis}*")
+                        st.markdown(f"**Testing hypothesis:** *{hypothesis}*")
 
                         result = synthesizer.test_hypothesis(hypothesis, evidence_chunks)
-                        
-                        verdict_emoji = {
-                            "SUPPORTED": "✅",
-                            "PARTIALLY_SUPPORTED": "🟡",
-                            "INCONCLUSIVE": "❓",
-                            "NOT_SUPPORTED": "🟠",
-                            "REFUTED": "❌",
-                        }.get(result.get("verdict", ""), "❓")
-                        
+
                         response = f"""
-## {verdict_emoji} Verdict: {result.get('verdict', 'Unknown')}
+## Verdict: {result.get('verdict', 'Unknown')}
 
 **Confidence:** {result.get('confidence', 'unknown').upper()}
 
@@ -373,7 +367,7 @@ if user_input:
                         st.markdown(response)
                         add_message("assistant", response)
                     else:
-                        st.markdown("🔍 **Finding patterns in your evidence...**")
+                        st.markdown("**Finding patterns in evidence...**")
 
                         result = synthesizer.find_patterns(evidence_chunks)
                         
@@ -385,18 +379,17 @@ if user_input:
 ### Key Patterns ({len(result.get('patterns', []))})
 """
                         for pattern in result.get("patterns", []):
-                            confidence_emoji = {"strong": "🟢", "moderate": "🟡", "weak": "🔴"}.get(pattern.get("confidence", ""), "⚪")
-                            response += f"\n**{pattern.get('theme', 'Unknown')}** {confidence_emoji}\n"
+                            response += f"\n**{pattern.get('theme', 'Unknown')}**\n"
                             response += f"{pattern.get('description', '')}\n"
                             response += f"*Evidence: {pattern.get('evidence_count', 'unknown')} | Confidence: {pattern.get('confidence', 'unknown')}*\n"
                         
                         if result.get("contradictions"):
-                            response += f"\n\n### ⚠️ Contradictions ({len(result.get('contradictions', []))})"
+                            response += f"\n\n### Contradictions ({len(result.get('contradictions', []))})"
                             for contradiction in result.get("contradictions", []):
                                 response += f"\n- {contradiction.get('description', '')}"
-                        
+
                         if result.get("gaps"):
-                            response += f"\n\n### 🕳️ Evidence Gaps ({len(result.get('gaps', []))})"
+                            response += f"\n\n### Evidence Gaps ({len(result.get('gaps', []))})"
                             for gap in result.get("gaps", []):
                                 response += f"\n- {gap.get('description', '')}"
                         
@@ -426,7 +419,7 @@ if user_input:
                         st.markdown(response)
                         add_message("assistant", response)
                     else:
-                        st.markdown("📊 **Generating stakeholder summary...**")
+                        st.markdown("**Generating stakeholder summary...**")
 
                         # First find patterns if we haven't
                         patterns_result = synthesizer.find_patterns(evidence_chunks)
@@ -440,7 +433,7 @@ if user_input:
                         )
                         
                         response = f"""
-## 📋 Stakeholder Summary
+## Stakeholder Summary
 
 ### {result.get('headline', 'Research Findings')}
 
@@ -462,7 +455,7 @@ if user_input:
                             response += f"\n> {conf['explanation']}"
                         
                         if result.get("caveats"):
-                            response += "\n\n### ⚠️ Caveats"
+                            response += "\n\n### Caveats"
                             for caveat in result["caveats"]:
                                 response += f"\n- {caveat}"
                         
@@ -508,20 +501,20 @@ if user_input:
                         # Use extracted assumption from parameters if available
                         assumption = parameters.get("assumption", user_input)
 
-                        st.markdown(f"😈 **Playing devil's advocate on:** *{assumption}*")
+                        st.markdown(f"**Analyzing counter-evidence for:** *{assumption}*")
 
                         result = output_gen.find_counter_evidence(assumption, evidence_chunks)
-                        
+
                         response = f"""
-## 😈 Counter-Evidence Analysis
+## Counter-Evidence Analysis
 
 **Assumption tested:** {result.get('assumption_tested', assumption)}
 
 ### Evidence Against Your Assumption
 """
                         for ev in result.get("counter_evidence", []):
-                            strength_emoji = {"strong": "🔴", "moderate": "🟠", "weak": "🟡"}.get(ev.get("strength_of_contradiction", ""), "⚪")
-                            response += f"\n{strength_emoji} {ev.get('content', '')}"
+                            strength = ev.get("strength_of_contradiction", "unknown")
+                            response += f"\n**[{strength.upper()}]** {ev.get('content', '')}"
                             response += f"\n   *Why this contradicts:* {ev.get('how_it_contradicts', '')}\n"
                         
                         if result.get("alternative_explanations"):
@@ -529,10 +522,10 @@ if user_input:
                             for alt in result.get("alternative_explanations", []):
                                 response += f"\n- Your evidence: *{alt.get('for_evidence', '')}*"
                                 response += f"\n  Alternative view: {alt.get('alternative', '')}\n"
-                        
-                        response += f"\n### 🎯 Devil's Advocate Summary\n{result.get('devil_advocate_summary', '')}"
-                        
-                        response += f"\n\n### 🤔 Honest Assessment\n{result.get('honest_assessment', '')}"
+
+                        response += f"\n### Alternative Perspective\n{result.get('devil_advocate_summary', '')}"
+
+                        response += f"\n\n### Balanced Assessment\n{result.get('honest_assessment', '')}"
                         
                         st.markdown(response)
                         display_reasoning_trace(result.get("reasoning_trace", []))
@@ -548,12 +541,12 @@ if user_input:
                         # Use extracted problem statement from parameters if available
                         problem = parameters.get("problem_statement", user_input)
 
-                        st.markdown(f"📊 **Assessing evidence strength for:** *{problem}*")
+                        st.markdown(f"**Assessing evidence strength for:** *{problem}*")
 
                         result = synthesizer.assess_confidence(problem, evidence_chunks)
-                        
+
                         response = f"""
-## 📊 Confidence Assessment
+## Confidence Assessment
 
 **Problem evaluated:** {result.get('problem_evaluated', problem)}
 
@@ -566,8 +559,7 @@ if user_input:
                         dims = result.get("dimensions", {})
                         for dim_name, dim_data in dims.items():
                             if isinstance(dim_data, dict):
-                                score_emoji = {"high": "🟢", "medium": "🟡", "low": "🔴"}.get(dim_data.get("score", ""), "⚪")
-                                response += f"\n**{dim_name.title()}:** {score_emoji} {dim_data.get('score', 'unknown')}"
+                                response += f"\n**{dim_name.title()}:** {dim_data.get('score', 'unknown').upper()}"
                                 response += f"\n   {dim_data.get('reasoning', '')}\n"
                         
                         if result.get("what_would_increase_confidence"):
@@ -609,11 +601,11 @@ Just paste your raw research and I'll help you make sense of it.
                     add_message("assistant", response)
             
             except Exception as e:
-                error_msg = f"❌ Error: {str(e)}\n\nPlease check your API key and try again."
+                error_msg = f"Error: {str(e)}\n\nPlease verify your API key and retry."
                 st.error(error_msg)
                 add_message("assistant", error_msg)
 
 
 # Footer
 st.divider()
-st.caption("Evidence Engine v0.1 | Built for PMs who want defensible decisions")
+st.caption("Evidence Engine | Transparent evidence synthesis for product decisions")
