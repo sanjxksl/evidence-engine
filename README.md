@@ -12,6 +12,10 @@ The tool addresses cognitive bias in product prioritization through systematic e
 
 ## Problem Statement
 
+Product prioritization frameworks like RICE and ICE promise objectivity through scoring, but in practice they often become post-hoc rationalization tools. Through a combination of literature review, hands-on framework testing, and interviews with practicing Product Managers and stakeholders, I found that prioritization decisions are consistently distorted by cognitive biases (e.g., HiPPO bias, confirmation bias, anchoring) and by data scarcity rather than lack of framework knowledge.
+
+This project emerged from the insight that the core problem is not calculating better scores, but generating better inputs and reasoning. PMs need structured ways to gather evidence, surface counter-evidence, and articulate defensible narratives—especially in environments where stakeholder pressure and uncertainty dominate. Evidence Engine was designed as a decision-support system that augments PM judgment by making assumptions explicit, evidence traceable, and gaps visible, rather than attempting to automate prioritization itself.
+
 Research indicates significant challenges in product decision-making:
 - Only 6.4% of features drive 80% of product usage (Pendo 2024)
 - 92% of high-confidence A/B tests fail to achieve predicted outcomes (Kohavi)
